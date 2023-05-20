@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doanh thu</title>
+    <script src='https://d3js.org/d3.v4.min.js'></script>
+</head>
+<body>
+    <script>
+
+        const data = [2000, 3000, 6000, 8000, 4000, 6000, 12000, 5000, 3500];
+        const total = data.reduce((a, b) => a + b, 0);
+        const rate = data.map((d) => (d / total) * 100);
+        const width = 1000;
+        const height = 700;
+        const svg = d3.select("body")        
+                    .append("svg")
+                    .attr("width", width)
+                    .attr("height", height);
+        svg.selectAll("rect")
+        .data(rate)
+        .enter()
+        .append("rect")
+        .attr("x", (d, i) => i * 70)
+        .attr("y", (d) => height - d * 20)
+        .attr("width", 50)
+        .attr("height", (d) => d * 20)
+        .attr("fill", "green");
+        svg.selectAll("text")
+        .data(rate)
+        .enter()
+        .append("text")
+        .text((d) => Math.round(d * total / 100) + " VND")
+        .attr("x", (d, i) => i * 70)
+        .attr("y", (d) => height - d * 20 - 10)
+        .attr("fill", "red");
+
+    </script>
+</body>
+</html>
